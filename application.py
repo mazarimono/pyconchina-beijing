@@ -96,6 +96,8 @@ app_dash.layout = html.Div(
                 html.Div(
                     [
                         html.Div([dcc.Link("TiTle", href="/")]),
+                        html.Div([dcc.Link("Link_to_web_app", href="/web-app")]),
+
                         html.Div([dcc.Link("自我介绍", href="/self-introduce")]),
                         html.Div([dcc.Link("为什么我来这里", href="/reasons")]),
                         html.Div([dcc.Link("Today's Menu", href="/menu")]),
@@ -112,6 +114,9 @@ app_dash.layout = html.Div(
                         html.Div(
                             [dcc.Link("dash_components", href="/dash_components")]
                         ),
+                        html.Div([dcc.Link("deploy", href="/deploy")]),
+                        html.Div([dcc.Link("matome", href="/matome")]),
+
                         html.Div(
                             [
                                 html.Img(
@@ -125,7 +130,7 @@ app_dash.layout = html.Div(
             id="title",
             style={
                 "width": "20%",
-                "height": 800,
+                "height": 900,
                 "backgroundColor": "#C5E99B",
                 "textAlign": "center",
                 "float": "left",
@@ -182,9 +187,26 @@ title = html.Div(
             "长目 CEO 小川 英幸",
             style={"textAlign": "right", "marginRight": "5%", "fontSize": 30},
         ),
+        html.Div(
+            [dcc.Link("Next: link_to_web_app", href="/web-app")],
+            style={"textAlign": "right", "margin": "5%"},
+        )
     ],
     style={"height": 900},
 )
+
+web_app = html.Div([
+    head_title("Web App"),
+    html.Div([
+        html.Img(src="assets/qr.png", style={"width": "30%", "marginTop": "5%", "marginBottom": "5%"}),
+        html.Br(),
+        dcc.Link("https://pyconchina-dash.azurewebsites.net/", href="https://pyconchina-dash.azurewebsites.net/",style={"textAlign": "center", "fontSize": 40})
+    ], style={"textAlign": "center", "padding": "5%"}),
+    html.Div(
+            [dcc.Link("Next: 自我介绍", href="/self-introduce")],
+            style={"textAlign": "right", "margin": "5%"},
+        )
+])
 
 self_intro = html.Div(
     [
@@ -295,8 +317,7 @@ menu = html.Div(
                     """
         1. Merit of interactive data visualization.
         1. About Data Visualization.
-        1. About Dash.      
-        1. Use cases and about data analysis.      
+        1. About Dash.         
 
     """,
                     style=mkstyle_ins,
@@ -1030,7 +1051,7 @@ about_dash = html.Div(
             style=mkstyle_ous,
         ),
         html.Div(
-            [dcc.Link("Next: dash_basic", href="/dash_graphs")],
+            [dcc.Link("Next: dash_basic", href="/dash_basic")],
             style={"textAlign": "right", "margin": "5%"},
         ),
     ]
@@ -1887,6 +1908,10 @@ dash_components = html.Div(
             ],
             style={"margin": "5%"},
         ),
+        html.Div(
+            [dcc.Link("Next: deploy", href="/deploy")],
+            style={"textAlign": "right", "margin": "5%"},
+        ),
     ]
 )
 
@@ -2144,6 +2169,102 @@ def generate_elements(nodeData, elements, expansion_mode):
 
     return elements
 
+# ------------------ deploy ----------------------------------------------
+
+deploy = html.Div([
+    head_title("deploy application"),
+    html.Div([
+    dcc.Markdown("""
+    Sharing applications is easy with cloud. This time I use Azure first time, but it was very easy too.
+    And I will show you how to deploy. [Here you can learn how to deploy Flask app.](https://docs.microsoft.com/en-us/azure/app-service/containers/how-to-configure-python#flask-app)
+    """, style=mkstyle_ins)
+    ], style=mkstyle_ous),
+    html.Div([
+    dcc.Markdown("""
+    1. Make your account and get CLI
+    2. Make Dash app file.
+    
+    ---  application.py ----
+
+    ```python:application.py
+
+    import dash
+    import dash_html_components as html
+
+    dash_app = dash.Dash(__name__)
+
+    app = dash_app.server
+
+    dash_app.layout = html.Div([
+        html.H1("hello world")
+    ])
+
+    if __name__ == "__main__":
+        dash_app.run_server(debug=True)
+
+    ```
+
+    ---  application.py ----
+
+    3. Make requirements file. ()
+    4. Deploy to azure with CLI.    
+
+    ---- CLI -----   
+    az login   
+    az webapp up -n <your-app-name> -l <your-location>   
+    ---- CLI -----   
+
+    5. Here we are! [Website](http://dash-sample-beijing.azurewebsites.net/)     
+    [files are on my github.](https://github.com/mazarimono/dash_beijing_deploy_sample)      
+
+    """, style=mkstyle_ins),
+    ], style=mkstyle_ous),
+    html.Div([
+        dcc.Markdown("""
+        Sharing Interactive data Visialization can be done easy with Dash.
+        So we can think deeply than ever. It will helps to create better services! 
+        """, style=mkstyle_ins)
+    ], style=mkstyle_ous),
+    html.Div(
+            [dcc.Link("Next: matome", href="/matome")],
+            style={"textAlign": "right", "margin": "5%"},
+        ),
+])
+
+# ----------------------- matome -----------------------------------
+
+matome = html.Div([
+    head_title("conclusion"),
+    html.Div([
+        
+    ], id="conclusion-div", style=mkstyle_ous)
+], id="conclusion-outside", n_clicks=0)
+
+@app_dash.callback(Output("conclusion-div", "children"),
+                [Input("conclusion-outside", "n_clicks")])
+def conlusion_update(n_clicks):
+    if n_clicks % 3 ==0:
+        return dcc.Markdown("""
+        - Interactive data visualization gives us more information than ever.
+        - There are better discoveries by sharing the graph with your colleagues.
+        - It will helps to create better services!
+        """, style=mkstyle_ins)
+    elif n_clicks % 3 == 1:
+        return html.Div([
+            html.Div([
+                html.H2("Let's Start with", style={"textAlign":"center"})
+            ], style={"backgroundColor": "#fbffb9", "borderRadius": 20}),
+            html.Div([
+                html.H2("pip install dash", style={"color": "white", "padding": "2.5%"})
+            ], style={"backgroundColor": "black", "borderRadius": 20})
+        ], style={"width": "90%", "margin": "auto"})
+    elif n_clicks % 3 == 2:
+        return html.Div([
+            html.P("谢谢", style={"textAlign": "center", "fontSize": 90, "marginTop": "5%"}),
+            html.Img(src="assets/python.png", style={"width": "30%", "textAlign": "center"}), 
+            html.P("wechat: xiao_hide / twitter: @ogawahideyuki", style={"textAlign": "center", "fontSize": 50})
+        ], style={"backgroundColor": "white", "textAlign": "center"})
+
 
 # Page Lotation Callback
 # ------------------------------------------------------------------------
@@ -2153,6 +2274,8 @@ def generate_elements(nodeData, elements, expansion_mode):
 def update_pages(pathname):
     if pathname == "/self-introduce":
         return self_intro
+    elif pathname == "/web-app":
+        return web_app
     elif pathname == "/reasons":
         return reasons
     elif pathname == "/menu":
@@ -2175,6 +2298,10 @@ def update_pages(pathname):
         return dash_graphs
     elif pathname == "/dash_components":
         return dash_components
+    elif pathname == "/deploy":
+        return deploy
+    elif pathname == "/matome":
+        return matome
     else:
         return title
 
