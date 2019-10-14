@@ -1,33 +1,30 @@
-import dash
-import dash_core_components as dcc
-import dash_html_components as html
-import dash_table
-import dash_daq as daq
-import dash_canvas
-import dash_cytoscape as cyto
-import dash_bio as dashbio
-from dash.dependencies import Input, State, Output
-from dash.exceptions import PreventUpdate
-
-import plotly
-import plotly.graph_objects as go
-import plotly.express as px
-import numpy as np
-import pandas as pd
-import skimage
 import json
 import os
 
+import dash
+import dash_bio as dashbio
+import dash_canvas
+import dash_core_components as dcc
+import dash_cytoscape as cyto
+import dash_daq as daq
+import dash_html_components as html
+import dash_table
+import numpy as np
+import pandas as pd
+import plotly
+import plotly.express as px
+import plotly.graph_objects as go
+import skimage
+from dash.dependencies import Input, Output, State
+from dash.exceptions import PreventUpdate
 from dash_canvas.components import image_upload_zone
 from dash_canvas.utils import (
+    array_to_data_url,
+    image_string_to_PILImage,
+    image_with_contour,
     parse_jsonstring,
     superpixel_color_segmentation,
-    image_with_contour,
-    image_string_to_PILImage,
-    array_to_data_url,
 )
-from dash_canvas.components import image_upload_zone
-
 
 # data read
 citydata = pd.read_csv("assets/citydata.csv", index_col=0)
@@ -97,7 +94,6 @@ app_dash.layout = html.Div(
                     [
                         html.Div([dcc.Link("TiTle", href="/")]),
                         html.Div([dcc.Link("Link_to_web_app", href="/web-app")]),
-
                         html.Div([dcc.Link("自我介绍", href="/self-introduce")]),
                         html.Div([dcc.Link("为什么我来这里", href="/reasons")]),
                         html.Div([dcc.Link("Today's Menu", href="/menu")]),
@@ -116,7 +112,6 @@ app_dash.layout = html.Div(
                         ),
                         html.Div([dcc.Link("deploy", href="/deploy")]),
                         html.Div([dcc.Link("matome", href="/matome")]),
-
                         html.Div(
                             [
                                 html.Img(
@@ -190,23 +185,35 @@ title = html.Div(
         html.Div(
             [dcc.Link("Next: link_to_web_app", href="/web-app")],
             style={"textAlign": "right", "margin": "5%"},
-        )
+        ),
     ],
     style={"height": 900},
 )
 
-web_app = html.Div([
-    head_title("Web App"),
-    html.Div([
-        html.Img(src="assets/qr.png", style={"width": "30%", "marginTop": "5%", "marginBottom": "5%"}),
-        html.Br(),
-        dcc.Link("https://pyconchina-dash.azurewebsites.net/", href="https://pyconchina-dash.azurewebsites.net/",style={"textAlign": "center", "fontSize": 40})
-    ], style={"textAlign": "center", "padding": "5%"}),
-    html.Div(
+web_app = html.Div(
+    [
+        head_title("Web App"),
+        html.Div(
+            [
+                html.Img(
+                    src="assets/qr.png",
+                    style={"width": "30%", "marginTop": "5%", "marginBottom": "5%"},
+                ),
+                html.Br(),
+                dcc.Link(
+                    "https://pyconchina-dash.azurewebsites.net/",
+                    href="https://pyconchina-dash.azurewebsites.net/",
+                    style={"textAlign": "center", "fontSize": 40},
+                ),
+            ],
+            style={"textAlign": "center", "padding": "5%"},
+        ),
+        html.Div(
             [dcc.Link("Next: 自我介绍", href="/self-introduce")],
             style={"textAlign": "right", "margin": "5%"},
-        )
-])
+        ),
+    ]
+)
 
 self_intro = html.Div(
     [
@@ -258,7 +265,7 @@ self_intro = html.Div(
                             )
                         ),
                         html.Br(),
-                        html.P("はんなり == 优雅"),
+                        html.P("はんなり == 优雅(you1ya3)"),
                         html.P("优雅Python 在每个第三个星期五 "),
                     ],
                     style={"fontSize": 25, "margin": "5%"},
@@ -292,7 +299,10 @@ reasons = html.Div(
                     - The most impressive scene was the they visited Square's office and disappointment of the expensive fee of the servise.
                 1. I found PyCon China Beijing.
                     - I accidentally found this event in August.
-                    - Then I was preparing for PyConJP talk.I send proposal with same theme.(But contents is not same.)
+                    - Then I was preparing for PyCon Japan talk.So I send proposal with same theme.(But contents is not same.)
+                1. Dash is good framework.
+                    - I am not contributor, I am user.
+                    - I want to share.
             """,
                     style=mkstyle_ins,
                 )
@@ -310,7 +320,7 @@ reasons = html.Div(
 
 menu = html.Div(
     [
-        head_title("Today's Menu"),
+        head_title("Today I will talk about"),
         html.Div(
             [
                 dcc.Markdown(
@@ -350,7 +360,7 @@ merit = html.Div(
     [
         html.Div(
             [
-                head_title("Merit of Interactive"),
+                head_title("Merit of Interactive data visualization"),
                 html.Div(
                     [
                         dcc.Markdown(
@@ -367,7 +377,7 @@ merit = html.Div(
                         html.Div(
                             [
                                 html.H2(
-                                    "Visit Japan by country(Top10: yearly)",
+                                    "Number of Foreign tourists in Japan(by country Top10: yearly)",
                                     style={"textAlign": "center"},
                                 )
                             ],
@@ -380,6 +390,7 @@ merit = html.Div(
                                 for y in jpvisit1["year"].unique()
                             ],
                             value=2019,
+                            clearable=False,
                             style={
                                 "height": 30,
                                 "width": "40%",
@@ -397,7 +408,7 @@ merit = html.Div(
             ]
         ),
         html.Div(
-            [html.H2("Visit Japan by country(monthly)", style={"textAlign": "center"})],
+            [html.H2("Number of tourist in japan(monthly)", style={"textAlign": "center"})],
             style={"backgroundColor": "#fbffb9"},
         ),
         html.Div(
@@ -409,6 +420,7 @@ merit = html.Div(
                         for country in jpvisit["country"].unique()
                     ],
                     value="中国",
+                    clearable=False,
                     style={"fontSize": 25, "height": 30, "textAlign": "center"},
                 )
             ],
@@ -447,8 +459,7 @@ merit = html.Div(
                     [
                         dcc.Markdown(
                             """
-                Kyoto has many tourists, but there were few hotels. So many people want
-                to invest to kyoto.But there was little good information.
+                There are not enough rooms to stay. So people started building rooms in hurry!
             """,
                             style=mkstyle_ins,
                         )
@@ -530,9 +541,9 @@ merit = html.Div(
                                     [
                                         dcc.Markdown(
                                             """
-                                * The map shows where hotels are.     
-                                * Only add map, name of hotels. Helps us understand more.     
-                                * Interactive data visualization gives us more information than ever.                     
+                                * The map shows where hotels are and where is popular or unpopular.     
+                                * I think this sample shows merit of interactive data visualization.    
+                                * Interactive data visualization gives us more information and helps us to understand circumstances.                     
                                   
                                 """,
                                             style=mkstyle_ins,
@@ -967,7 +978,7 @@ def update_interactive(n_clicks, country_list):
     else:
         return dcc.Graph(
             figure=px.scatter(
-                gapp,
+                gapminder,
                 x="gdpPercap",
                 y="lifeExp",
                 size="pop",
@@ -998,7 +1009,8 @@ visualization_tools = html.Div(
             ### Libraries
             #### D3, Highcharts, Matplotlib, Bokeh, etc....
             ### Interactive Web Framework
-            #### Shiny(R), Dash(Python), Panel(Python)
+            #### Shiny(R), Dash(Python & R), Panel(Python)
+            ### these are good tools and use whatever you like. It helps to understand data.
         """,
                             style=mkstyle_ins,
                         ),
@@ -1031,19 +1043,19 @@ about_dash = html.Div(
             [
                 dcc.Markdown(
                     """
-            - Dash is Analytical web application.
+            - Dash is Analytical web framework.
                 - Open Souce Python library.
-                - made by [plotly](https://plot.ly/).
+                - Made by [plotly](https://plot.ly/).
                 - Write code with only Python.
                 - Made by Flask、plotly.js、react.js.
                 - [Document](https://dash.plot.ly/)
-            - Interactive data visualization, and easy to share.
+            - easy to build Interactive data visualization, and easy to share.
                 - Data Visualozation with Plotly.
-                - A lot of data can watch.
+                - A lot of data can observe.
                 - Easy to share on the web.
             - There are many other components besides graphs.
-                - Dash_table、Dash_Canvas、Dash-Bio and so on.
-                - You can make a component!
+                - Dash_Cytoscape、Dash-Bio and so on.
+                - [You can build your own components!](https://dash.plot.ly/plugins)
         """,
                     style=mkstyle_ins,
                 )
@@ -1059,7 +1071,7 @@ about_dash = html.Div(
 
 dash_basic = html.Div(
     [
-        head_title("how to make dash application."),
+        head_title("how to build dash application."),
         html.Div(
             [
                 html.Div(
@@ -1099,7 +1111,7 @@ dash_basic = html.Div(
                         html.Div(
                             [
                                 html.H2(
-                                    "Dash application made by layout and callbacks.",
+                                    "Dash application is made by layout and callbacks.",
                                     style={"textAlign": "center"},
                                 )
                             ],
@@ -1110,8 +1122,8 @@ dash_basic = html.Div(
                                 dcc.Markdown(
                                     """
                             - Layout
-                                - make what looks like
-                                - use components
+                                - make what looks like.
+                                - build with components.
                             - callbacks
                                 - Keys to make applications interactive.
                                 - Use Input State Output
@@ -1129,13 +1141,15 @@ dash_basic = html.Div(
                         html.P("Code ", style={"fontSize": 30}),
                         dcc.Markdown(
                             """
+            ```python
+
             import dash     
             import dash_core_components as dcc     
             import dash_html_components as html     
                  
-            app = dash.Dash()      
+            app = dash.Dash(__name__)      
                      
-           \# Create a layout     
+           # Create a layout     
                   
             app.layout = html.Div(     
                     children=[    
@@ -1157,13 +1171,17 @@ dash_basic = html.Div(
                 ]    
             )     
                   
-            \# Create a callback    
+            # Create a callback    
             @app.callback(Output("hello-graph-callback", "children"),         
-                        \[Input("hello-graph", "hoverData")\]\)             
+                        [Input("hello-graph", "hoverData")])             
             def hello_graph_callback(hoverData):         
                 return json.dumps(hoverData)         
 
-            app.run_server(debug=True)     
+            if __name__ == "__main__"
+                app.run_server(debug=True)  
+            
+            ```
+
             """,
                             style=mkstyle_ins,
                         ),
@@ -1202,8 +1220,11 @@ dash_graphs = html.Div(
                     [
                         dcc.Markdown(
                             """
-                Dash graphs need to use dash_core_components module's Graph class.
-                Inside of it, you can use plotly! Off cource you can write it by dash.
+                Difference between normal web framework and dash is dash can use the interactive graph.
+     
+                Dash can create graphs with Dash and Plotly.     
+                And plotly has wrapper names plotly.express like maplotlib's seaborn.     
+                Let look difference !
                         """,
                             style=mkstyle_ins,
                         )
@@ -1230,36 +1251,36 @@ dash_graphs = html.Div(
                     style={"fontSize": 30},
                 ),
                 html.Div(id="graph_by_module"),
-                html.Div(
-                    [html.H2("Graph Types", style={"textAlign": "center"})],
-                    style={"backgroundColor": "#fbffb9"},
-                ),
-                html.Div(
-                    [
-                        dcc.Markdown(
-                            """
-                    [Plotly.py](https://plot.ly/python/) library supports over 40 chart types.
-                    Here shows some exmples.
-                    """,
-                            style=mkstyle_ins,
-                        )
-                    ],
-                    style=mkstyle_ous,
-                ),
-                dcc.RadioItems(
-                    id="graphModule",
-                    options=[
-                        {"label": i, "value": i}
-                        for i in ["plotly.graph_objects", "plotly.express"]
-                    ],
-                    value="plotly.graph_objects",
-                    labelStyle={
-                        "display": "inline-block",
-                        "margin": "2%",
-                        "fontSize": 30,
-                    },
-                ),
-                html.Div(id="graphType"),
+                # html.Div(
+                #     [html.H2("Graph Types", style={"textAlign": "center"})],
+                #     style={"backgroundColor": "#fbffb9"},
+                # ),
+                # html.Div(
+                #     [
+                #         dcc.Markdown(
+                #             """
+                #     [Plotly.py](https://plot.ly/python/) library supports over 40 chart types.
+                #     Here shows some exmples.
+                #     """,
+                #             style=mkstyle_ins,
+                #         )
+                #     ],
+                #     style=mkstyle_ous,
+                # ),
+                # dcc.RadioItems(
+                #     id="graphModule",
+                #     options=[
+                #         {"label": i, "value": i}
+                #         for i in ["plotly.graph_objects", "plotly.express"]
+                #     ],
+                #     value="plotly.graph_objects",
+                #     labelStyle={
+                #         "display": "inline-block",
+                #         "margin": "2%",
+                #         "fontSize": 30,
+                #     },
+                # ),
+                # html.Div(id="graphType"),
             ],
             style={"margin": "5%"},
         ),
@@ -1302,8 +1323,15 @@ def update_by_graph_module(module_name):
                     [
                         dcc.Markdown(
                             """
-            dcc.Graph(figure={"data": [{"x": gapminder2007["gdpPercap"], "y":gapminder2007["lifeExp"],"mode":"markers"
-            }], "layout": {"height": 400, "xaxis": {"title": "gdpPercap(log)", "type": "log"}, "yaxis":{"title": "lifeExp"}, "title":"Graph by Dash"}})
+
+            ```
+            dcc.Graph(figure={"data": [{"x": gapminder2007["gdpPercap"], 
+            "y":gapminder2007["lifeExp"],"mode":"markers"}], 
+            "layout": {"height": 400, "xaxis": {"title": "gdpPercap(log)",
+             "type": "log"}, "yaxis":{"title": "lifeExp"}, 
+             "title":"Graph by Dash"}})
+            ```
+
             """,
                             style=mkstyle_ins,
                         )
@@ -1337,8 +1365,15 @@ def update_by_graph_module(module_name):
                     [
                         dcc.Markdown(
                             """
-            dcc.Graph(figure={"data": [go.Scatter(x=gapminder2007["gdpPercap"], y=gapminder2007["lifeExp"], mode="markers")],
-            "layout":go.Layout(height=400, xaxis={"title": "gdpPercap(log)", "type":"log"}, yaxis={"title":"lifeExp"}, title= "Graph by plotly.graph_objects")})
+
+            ```
+            dcc.Graph(figure={"data": [go.Scatter(x=gapminder2007["gdpPercap"],
+             y=gapminder2007["lifeExp"], mode="markers")],
+            "layout":go.Layout(height=400, xaxis={"title": "gdpPercap(log)", 
+            "type":"log"}, yaxis={"title":"lifeExp"}, 
+            title= "Graph by plotly.graph_objects")})
+            ```
+            
             """,
                             style=mkstyle_ins,
                         )
@@ -1365,7 +1400,8 @@ def update_by_graph_module(module_name):
                     [
                         dcc.Markdown(
                             """
-            dcc.Graph(figure=px.scatter(gapminder2007, x="gdpPercap", y="lifeExp", height=400, log_x=True, title="Graph by plotly.express"))
+            dcc.Graph(figure=px.scatter(gapminder2007, x="gdpPercap", 
+            y="lifeExp", height=400, log_x=True, title="Graph by plotly.express"))
             """,
                             style=mkstyle_ins,
                         )
@@ -1675,6 +1711,7 @@ dash_components = html.Div(
                                         dict(Model=i, **{param: 0 for param in params})
                                         for i in range(1, 5)
                                     ],
+                                    style_cell={"fontSize": 25, "textAlign": "center"},
                                     editable=True,
                                 ),
                                 dcc.Graph(id="table-editing-simple-output"),
@@ -2169,18 +2206,28 @@ def generate_elements(nodeData, elements, expansion_mode):
 
     return elements
 
+
 # ------------------ deploy ----------------------------------------------
 
-deploy = html.Div([
-    head_title("deploy application"),
-    html.Div([
-    dcc.Markdown("""
+deploy = html.Div(
+    [
+        head_title("deploy application"),
+        html.Div(
+            [
+                dcc.Markdown(
+                    """
     Sharing applications is easy with cloud. This time I use Azure first time, but it was very easy too.
     And I will show you how to deploy. [Here you can learn how to deploy Flask app.](https://docs.microsoft.com/en-us/azure/app-service/containers/how-to-configure-python#flask-app)
-    """, style=mkstyle_ins)
-    ], style=mkstyle_ous),
-    html.Div([
-    dcc.Markdown("""
+    """,
+                    style=mkstyle_ins,
+                )
+            ],
+            style=mkstyle_ous,
+        ),
+        html.Div(
+            [
+                dcc.Markdown(
+                    """
     1. Make your account and get CLI
     2. Make Dash app file.
     
@@ -2217,53 +2264,92 @@ deploy = html.Div([
     5. Here we are! [Website](http://dash-sample-beijing.azurewebsites.net/)     
     [files are on my github.](https://github.com/mazarimono/dash_beijing_deploy_sample)      
 
-    """, style=mkstyle_ins),
-    ], style=mkstyle_ous),
-    html.Div([
-        dcc.Markdown("""
-        Sharing Interactive data Visialization can be done easy with Dash.
-        So we can think deeply than ever. It will helps to create better services! 
-        """, style=mkstyle_ins)
-    ], style=mkstyle_ous),
-    html.Div(
+    """,
+                    style=mkstyle_ins,
+                )
+            ],
+            style=mkstyle_ous,
+        ),
+        html.Div(
+            [
+                dcc.Markdown(
+                    """
+        - Sharing Interactive data Visialization can be done easy with Dash.     
+        - So we can think deeply with collegue or client.     
+        - It will helps to create better services!     
+        """,
+                    style=mkstyle_ins,
+                )
+            ],
+            style=mkstyle_ous,
+        ),
+        html.Div(
             [dcc.Link("Next: matome", href="/matome")],
             style={"textAlign": "right", "margin": "5%"},
         ),
-])
+    ]
+)
 
 # ----------------------- matome -----------------------------------
 
-matome = html.Div([
-    head_title("conclusion"),
-    html.Div([
-        
-    ], id="conclusion-div", style=mkstyle_ous)
-], id="conclusion-outside", n_clicks=0)
+matome = html.Div(
+    [head_title("conclusion"), html.Div([], id="conclusion-div", style=mkstyle_ous)],
+    id="conclusion-outside",
+    n_clicks=0,
+)
 
-@app_dash.callback(Output("conclusion-div", "children"),
-                [Input("conclusion-outside", "n_clicks")])
+
+@app_dash.callback(
+    Output("conclusion-div", "children"), [Input("conclusion-outside", "n_clicks")]
+)
 def conlusion_update(n_clicks):
-    if n_clicks % 3 ==0:
-        return dcc.Markdown("""
-        - Interactive data visualization gives us more information than ever.
-        - There are better discoveries by sharing the graph with your colleagues.
-        - It will helps to create better services!
-        """, style=mkstyle_ins)
+    if n_clicks % 3 == 0:
+        return dcc.Markdown(
+            """
+        - Interactive data visualization gives us more information.
+        - There are better discoveries by sharing the graph with your colleagues and client.
+        - Good insights help to create better services!
+        """,
+            style=mkstyle_ins,
+        )
     elif n_clicks % 3 == 1:
-        return html.Div([
-            html.Div([
-                html.H2("Let's Start with", style={"textAlign":"center"})
-            ], style={"backgroundColor": "#fbffb9", "borderRadius": 20}),
-            html.Div([
-                html.H2("pip install dash", style={"color": "white", "padding": "2.5%"})
-            ], style={"backgroundColor": "black", "borderRadius": 20})
-        ], style={"width": "90%", "margin": "auto"})
+        return html.Div(
+            [
+                html.Div(
+                    [html.H2("I think dash can help with this process!", style={"textAlign": "center"}),
+                        html.H2("Let's Start with", style={"textAlign": "center"})],
+                    style={"backgroundColor": "#fbffb9", "borderRadius": 20},
+                ),
+                html.Div(
+                    [
+                        html.H2(
+                            "pip install dash",
+                            style={"color": "white", "padding": "2.5%"},
+                        )
+                    ],
+                    style={"backgroundColor": "black", "borderRadius": 20},
+                ),
+            ],
+            style={"width": "90%", "margin": "auto"},
+        )
     elif n_clicks % 3 == 2:
-        return html.Div([
-            html.P("谢谢", style={"textAlign": "center", "fontSize": 90, "marginTop": "5%"}),
-            html.Img(src="assets/python.png", style={"width": "30%", "textAlign": "center"}), 
-            html.P("wechat: xiao_hide / twitter: @ogawahideyuki", style={"textAlign": "center", "fontSize": 50})
-        ], style={"backgroundColor": "white", "textAlign": "center"})
+        return html.Div(
+            [
+                html.P(
+                    "谢谢",
+                    style={"textAlign": "center", "fontSize": 90, "marginTop": "5%"},
+                ),
+                html.Img(
+                    src="assets/python.png",
+                    style={"width": "30%", "textAlign": "center"},
+                ),
+                html.P(
+                    "wechat: xiao_hide",
+                    style={"textAlign": "center", "fontSize": 50},
+                ),
+            ],
+            style={"backgroundColor": "white", "textAlign": "center"},
+        )
 
 
 # Page Lotation Callback
