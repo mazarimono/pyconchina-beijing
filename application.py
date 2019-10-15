@@ -246,7 +246,7 @@ self_intro = html.Div(
                                     "· I worked as a trader and analyst at Financial Institute."
                                 ),
                                 html.P(
-                                    "· I started using Python 5 years ago(numpy pandas matoplotlib)."
+                                    "· I started using Python 5 years ago(for data analysis)."
                                 ),
                                 html.P("· I founded a company named Chomoku(长目)."),
                             ]
@@ -293,9 +293,9 @@ reasons = html.Div(
                     - My company name "Chomoku" is from old chinese word ["长目飞耳"](https://baike.baidu.com/item/%E9%95%BF%E7%9B%AE%E9%A3%9E%E8%80%B3).
                 1. Many People says "Chinese Programmer quiality is the best in the world."
                     - My friend who work at chinese company said so too!
-                    - I want to meet.
+                    - I want to meet.(I cannot speak Chinese and not good at English...)
                 1. I read a book titled "Ant Financial".
-                    - It has many impressive scenes.
+                    - This book was very exiting for me.
                     - The most impressive scene was the they visited Square's office and disappointment of the expensive fee of the servise.
                 1. I found PyCon China Beijing.
                     - I accidentally found this event in August.
@@ -365,7 +365,8 @@ merit = html.Div(
                     [
                         dcc.Markdown(
                             """
-            At first, Let's feel the merit of Interactive Data Visualization with simple data.
+            At first, Let's feel the merit of Interactive Data Visualization.    
+            (Data: Number of Tourist in Japan, Number of permission of hotel in kyoto)
             """,
                             style=mkstyle_ins,
                         )
@@ -459,7 +460,7 @@ merit = html.Div(
                     [
                         dcc.Markdown(
                             """
-                There are not enough rooms to stay. So people started building rooms in hurry!
+                There are not enough rooms to stay. So people rushed buying rooms! And I wanted too!!
             """,
                             style=mkstyle_ins,
                         )
@@ -495,9 +496,9 @@ merit = html.Div(
                             [
                                 dcc.Markdown(
                                     """
-                            This graph shows increase of hotels. But this has no information 
-                            for investment decision.    
-                            So I make an interactive graph that has information. 
+                            So I want information about real-estate.But no one give me.     
+                            Graph like this is not for investment decision.    
+                            So I make my interactive data visualization!     
                             """,
                                     style=mkstyle_ins,
                                 )
@@ -798,7 +799,7 @@ def update_markdown(n_clicks):
                     - 1.Define your questions & goals.     
                     - 2.Collect data.      
                     - 3.Data Preprocessing.      
-                    - 4.Exploratory data analysis & Feature Engineering.      
+                    - 4.Exploratory data analysis.      
                     - 5.Evaluate Model and Algorithms.      
             """,
             style=mkstyle_ins,
@@ -808,9 +809,9 @@ def update_markdown(n_clicks):
             """
             ## Exploratory data analysis     
                 - Analyze data sets and summarize their main characters.
-                - To know buissiness.
-                - Feature Engineering.     
-            ## And This step often use visual methods.
+                - To know buissiness.     
+            ## This step often use visual methods.Because in this step we human observe data.
+            ## This step is important to make good model.
             """,
             style=mkstyle_ins,
         )
@@ -1003,14 +1004,14 @@ visualization_tools = html.Div(
                     [
                         dcc.Markdown(
                             """
-            ## There are many visualization tools
+            ## There are many data visualization tools
             ### BI Tools:(1)
             #### Tableau, Microsoft Power BI, Qlik, SAP BI, Google Data Studio
             ### Libraries
             #### D3, Highcharts, Matplotlib, Bokeh, etc....
             ### Interactive Web Framework
             #### Shiny(R), Dash(Python & R), Panel(Python)
-            ### these are good tools and use whatever you like. It helps to understand data.
+            ### All of these are good tools and we can use whatever we like. It helps to understand data.
         """,
                             style=mkstyle_ins,
                         ),
@@ -1044,12 +1045,12 @@ about_dash = html.Div(
                 dcc.Markdown(
                     """
             - Dash is Analytical web framework.
-                - Open Souce Python library.
+                - Open Souce Python library(MIT License).
                 - Made by [plotly](https://plot.ly/).
                 - Write code with only Python.
                 - Made by Flask、plotly.js、react.js.
                 - [Document](https://dash.plot.ly/)
-            - easy to build Interactive data visualization, and easy to share.
+            - With Dash it is easy to build Interactive data visualization, and easy to share.
                 - Data Visualozation with Plotly.
                 - A lot of data can observe.
                 - Easy to share on the web.
@@ -1188,6 +1189,12 @@ dash_basic = html.Div(
                     ],
                     style=mkstyle_ous,
                 ),
+                html.Div([
+                    dcc.Markdown("""
+                        - This app was written in just only 38 lines!(including comments!! formatted with black!!!)     
+                        - With Dash we can build complex application easily.
+                    """, style=mkstyle_ins)
+                ], style=mkstyle_ous),
             ]
         ),
         html.Div(
@@ -1207,7 +1214,7 @@ def hello_graph_callback(hoverData):
 
 # dash_graphs
 ### Think about graphs to show sample.
-graphModuleList = ["dash", "plotly.graph_objects", "plotly_express"]
+graphModuleList = ["dash", "plotly.graph_objects", "plotly.express"]
 go_graphTypes = []
 px_graphTypes = []
 
@@ -1220,11 +1227,11 @@ dash_graphs = html.Div(
                     [
                         dcc.Markdown(
                             """
-                Difference between normal web framework and dash is dash can use the interactive graph.
+                Difference between normal web framework and dash is dash can use the interactive graphs.
      
-                Dash can create graphs with Dash and Plotly.     
+                Dash can create graphs with Plotly.     
                 And plotly has wrapper names plotly.express like maplotlib's seaborn.     
-                Let look difference !
+                Let's look difference of module!
                         """,
                             style=mkstyle_ins,
                         )
@@ -2274,8 +2281,8 @@ deploy = html.Div(
             [
                 dcc.Markdown(
                     """
-        - Sharing Interactive data Visialization can be done easy with Dash.     
-        - So we can think deeply with collegue or client.     
+        - Sharing Interactive data Visialization can be done easy with Dash and cloud.     
+        - Collaborating with collegues and client will be eisier and there will be new discoveries.    
         - It will helps to create better services!     
         """,
                     style=mkstyle_ins,
@@ -2307,7 +2314,7 @@ def conlusion_update(n_clicks):
         return dcc.Markdown(
             """
         - Interactive data visualization gives us more information.
-        - There are better discoveries by sharing the graph with your colleagues and client.
+        - Sharing(apps) and collaborating will create new discoveries.
         - Good insights help to create better services!
         """,
             style=mkstyle_ins,
