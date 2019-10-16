@@ -296,8 +296,7 @@ reasons = html.Div(
                     - I want to meet.(I cannot speak Chinese and not good at English...)
                 1. I read a book titled "Ant Financial".
                     - This book was very exiting for me.
-                    - The most impressive scene was that Ant Financial people visited Square's office and they were disappointment of Square's buissiness model. Square earn from the expensive fee of the servise.   
-                    - Ant Financial start to think their own buisiness model.
+                    - The most impressive scene was that Ant Financial people visited Square's office and they were disappointment of Square's buissiness model. Square earn from the expensive fee of the servise.And Ant Financial start to think their own buisiness model.
                 1. I found PyCon China Beijing.
                     - I accidentally found this event in August.
                     - Then I was preparing for PyCon Japan talk.So I send proposal with same theme.(But contents is not same.)
@@ -461,7 +460,7 @@ merit = html.Div(
                     [
                         dcc.Markdown(
                             """
-                There are not enough rooms to stay. So people rushed buying rooms! And I wanted too!!
+                There are not enough rooms to stay. So people rushed buying hotels and rooms!
             """,
                             style=mkstyle_ins,
                         )
@@ -497,9 +496,10 @@ merit = html.Div(
                             [
                                 dcc.Markdown(
                                     """
-                            So I want information about real-estate.But no one give me.     
-                            Graph like this is not for investment decision.    
-                            So I make my interactive data visualization!     
+                            - And I wanted too!!
+                            - So I want information about real-estate situation.But no one give me.     
+                            - Graph above is not for investment decision.    
+                            - So I make my interactive data visualization!     
                             """,
                                     style=mkstyle_ins,
                                 )
@@ -546,7 +546,7 @@ merit = html.Div(
                                 * The map shows where hotels are and where is popular or unpopular.     
                                 * I think this sample shows merit of interactive data visualization.    
                                 * Interactive data visualization gives us more information and helps us to understand circumstances.                     
-                                  
+                                * I think it is necessary for decisions.  
                                 """,
                                             style=mkstyle_ins,
                                         )
@@ -1582,7 +1582,7 @@ dash_components = html.Div(
                     [
                         dcc.Markdown(
                             """
-            Dash's layout must be made by components.Dash has 7 components ready to use.
+            Dash has 7 components ready to use.
             Today I will show you some of these.
         """,
                             style=mkstyle_ins,
@@ -1613,7 +1613,7 @@ dash_components = html.Div(
             html.H1("Hello China!")
             ```
 
-            Dash_components_components has 131 classes. Covers all HTML tags? I have no idea.
+            Covers all HTML tags? Off Cource!!
 
         """,
                             style=mkstyle_ins,
@@ -1701,7 +1701,8 @@ dash_components = html.Div(
                                 dcc.Markdown(
                                     """
                 - Dash Datatable is interactive table. This can be use like Excel.
-                - I will show you how the graph changes as I enter numbers in the table.   
+                - I will show you how the graph changes as I enter numbers in the table. 
+                - You can create applications that can be used by drag and drop data with dash core components.  
             """,
                                     style=mkstyle_ins,
                                 )
@@ -1746,8 +1747,9 @@ dash_components = html.Div(
                     [
                         dcc.Markdown(
                             """
-            Dash Daq is for Data aquisition. It can make beautiful UIs.Tools for Measuring 
-            such as voltage,temperature, pressure and more. 
+            - Dash Daq is for Data aquisition. 
+            - Here I make fake real time application with numpy random modules.
+            - Push the button!!
         """,
                             style=mkstyle_ins,
                         )
@@ -1786,8 +1788,9 @@ dash_components = html.Div(
                     [
                         dcc.Markdown(
                             """
-            Dash Canvas is drawing and annotation for image processing. Annotation for 
-            Machine Learning training set and more.
+            - Dash Canvas is drawing and annotation for image processing. 
+            - Today I create application that use remove background algorithm.
+            - I remove background from my picture.
         """,
                             style=mkstyle_ins,
                         )
@@ -1833,8 +1836,11 @@ dash_components = html.Div(
                     [
                         dcc.Markdown(
                             """
-                        [Dash Cytoscape](https://github.com/plotly/dash-cytoscape) is a network visualization components. Using Cytoscape.js.
-                        
+                        - [Dash Cytoscape](https://github.com/plotly/dash-cytoscape) is a network visualization components. Using Cytoscape.js.
+                        - If you click node, node connected with the node will apeears.
+                        - Changing the layout changes the way the network looks.
+                        - If we choose concentric, we can see what is at the center of the network.
+                        - If we choose Breadthfirst, we can see the structure of the network.
                     """,
                             style=mkstyle_ins,
                         )
@@ -1925,8 +1931,8 @@ dash_components = html.Div(
                             [
                                 dcc.Markdown(
                                     """
-                        [Dash Bio](https://dash.plot.ly/dash-bio) is Bioinformatics components.This component is for Bio informatics,
-                        But some graphs can be used normally.
+                        - [Dash Bio](https://dash.plot.ly/dash-bio) is Bioinformatics components.
+                        - My friend works in bio industry use this components and he said this is useful.
                         """,
                                     style=mkstyle_ins,
                                 )
@@ -2285,8 +2291,9 @@ deploy = html.Div(
                 dcc.Markdown(
                     """
         - Sharing Interactive data Visialization can be done easy with Dash and cloud.     
-        - Collaborating with collegues and client will be eisier and there will be many new discoveries.    
-        - It will helps to create better services!     
+        - Collaborating with collegues and client will be eisier.
+        - there will be many new discoveries.    
+        - Sharing data visualization will helps to create better services!     
         """,
                     style=mkstyle_ins,
                 )
@@ -2317,7 +2324,7 @@ def conlusion_update(n_clicks):
         return dcc.Markdown(
             """
         - Interactive data visualization gives us more information.
-        - Sharing(apps) and collaborating will create new discoveries.
+        - Sharing and collaborating will create new discoveries.
         - Good insights help to create better services!
         """,
             style=mkstyle_ins,
