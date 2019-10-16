@@ -289,14 +289,15 @@ reasons = html.Div(
                 dcc.Markdown(
                     """
                 1. I heve been interested in chinese culture.    
-                    - I learn chinese for a year and half.       
+                    - I learn chinese for a year and half.(not good student...)       
                     - My company name "Chomoku" is from old chinese word ["长目飞耳"](https://baike.baidu.com/item/%E9%95%BF%E7%9B%AE%E9%A3%9E%E8%80%B3).
                 1. Many People says "Chinese Programmer quiality is the best in the world."
                     - My friend who work at chinese company said so too!
                     - I want to meet.(I cannot speak Chinese and not good at English...)
                 1. I read a book titled "Ant Financial".
                     - This book was very exiting for me.
-                    - The most impressive scene was the they visited Square's office and disappointment of the expensive fee of the servise.
+                    - The most impressive scene was that Ant Financial people visited Square's office and they were disappointment of Square's buissiness model. Square earn from the expensive fee of the servise.   
+                    - Ant Financial start to think their own buisiness model.
                 1. I found PyCon China Beijing.
                     - I accidentally found this event in August.
                     - Then I was preparing for PyCon Japan talk.So I send proposal with same theme.(But contents is not same.)
@@ -366,7 +367,7 @@ merit = html.Div(
                         dcc.Markdown(
                             """
             At first, Let's feel the merit of Interactive Data Visualization.    
-            (Data: Number of Tourist in Japan, Number of permission of hotel in kyoto)
+            (Data: Number of Tourist in Japan, Number of permission of hotel in Kyoto)
             """,
                             style=mkstyle_ins,
                         )
@@ -1044,8 +1045,8 @@ about_dash = html.Div(
             [
                 dcc.Markdown(
                     """
-            - Dash is Analytical web framework.
-                - Open Souce Python library(MIT License).
+            - Dash is Open Source Python library(MIT License).
+                - Analytical web framework.
                 - Made by [plotly](https://plot.ly/).
                 - Write code with only Python.
                 - Made by Flask、plotly.js、react.js.
@@ -1581,8 +1582,8 @@ dash_components = html.Div(
                     [
                         dcc.Markdown(
                             """
-            Dash's layout must be made by components.I will show 7 components ready to use.
-            [You can make your own components](https://dash.plot.ly/plugins)!
+            Dash's layout must be made by components.Dash has 7 components ready to use.
+            Today I will show you some of these.
         """,
                             style=mkstyle_ins,
                         )
@@ -1699,7 +1700,8 @@ dash_components = html.Div(
                             [
                                 dcc.Markdown(
                                     """
-                Dash Datatable is interactive table. This can be use like Excel.
+                - Dash Datatable is interactive table. This can be use like Excel.
+                - I will show you how the graph changes as I enter numbers in the table.   
             """,
                                     style=mkstyle_ins,
                                 )
