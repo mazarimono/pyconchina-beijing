@@ -2270,7 +2270,8 @@ deploy = html.Div(
     az webapp up -n <your-app-name> -l <your-location>   
     ---- CLI -----   
 
-    5. Here we are! [Website](http://dash-sample-beijing.azurewebsites.net/)     
+    5. Here we are!　Deploy is complete!   
+    [Website](https://dash-sample-beijing.azurewebsites.net/)     
     [files are on my github.](https://github.com/mazarimono/dash_beijing_deploy_sample)      
 
     """,
@@ -2284,7 +2285,7 @@ deploy = html.Div(
                 dcc.Markdown(
                     """
         - Sharing Interactive data Visialization can be done easy with Dash and cloud.     
-        - Collaborating with collegues and client will be eisier and there will be new discoveries.    
+        - Collaborating with collegues and client will be eisier and there will be many new discoveries.    
         - It will helps to create better services!     
         """,
                     style=mkstyle_ins,
@@ -2302,7 +2303,7 @@ deploy = html.Div(
 # ----------------------- matome -----------------------------------
 
 matome = html.Div(
-    [head_title("conclusion"), html.Div([], id="conclusion-div", style=mkstyle_ous)],
+    [head_title("Summary of today's talk!"), html.Div([], id="conclusion-div", style=mkstyle_ous)],
     id="conclusion-outside",
     n_clicks=0,
 )
