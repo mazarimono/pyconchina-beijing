@@ -2268,7 +2268,7 @@ deploy = html.Div(
 
     ---  application.py ----
 
-    3. Make requirements file. ()
+    3. Make requirements file. 
     4. Deploy to azure with CLI.    
 
     ---- CLI -----   
@@ -2276,7 +2276,7 @@ deploy = html.Div(
     az webapp up -n <your-app-name> -l <your-location>   
     ---- CLI -----   
 
-    5. Here we are!　Deploy is complete!   
+    5. Here we are!　Deploy is complete!(and one year it is free!!!)   
     [Website](https://dash-sample-beijing.azurewebsites.net/)     
     [files are on my github.](https://github.com/mazarimono/dash_beijing_deploy_sample)      
 
@@ -2293,7 +2293,7 @@ deploy = html.Div(
         - Sharing Interactive data Visialization can be done easy with Dash and cloud.     
         - Collaborating with collegues and client will be eisier.
         - there will be many new discoveries.    
-        - Sharing data visualization will helps to create better services!     
+        - Sharing interactive data visualization will helps us to create better services!     
         """,
                     style=mkstyle_ins,
                 )
@@ -2325,7 +2325,7 @@ def conlusion_update(n_clicks):
             """
         - Interactive data visualization gives us more information.
         - Sharing and collaborating will create new discoveries.
-        - Good insights help to create better services!
+        - Good insights help to create better services and future!
         """,
             style=mkstyle_ins,
         )
