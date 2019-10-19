@@ -35,8 +35,7 @@ filename = array_to_data_url(skimage.io.imread(filepath))
 
 # mapbox
 px.set_mapbox_access_token(
-    "pk.eyJ1IjoibWF6YXJpbW9ubyIsImEiOiJjanA5Y3I\
-xaWsxeGtmM3dweDh5bjgydGFxIn0.3vrfsqZ_kGPGhi4_npruGg"
+    "your_token"
 )
 
 # markdownのスタイル
@@ -353,8 +352,7 @@ jpvisit1 = jpvisit[~jpvisit["country"].isin(ex_area)]
 
 df_kyoto_hotels_groupby = pd.read_csv("assets/kyoto_hotel_groupby.csv", index_col=0)
 df_kyoto_hotels = pd.read_csv("assets/kyoto_hotel_comp.csv", index_col=0)
-mapbox_accesstoken = "pk.eyJ1IjoibWF6YXJpbW9ubyIsImEiOiJjanA5Y3I\
-xaWsxeGtmM3dweDh5bjgydGFxIn0.3vrfsqZ_kGPGhi4_npruGg"
+mapbox_accesstoken = "your_token"
 
 merit = html.Div(
     [
